@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Hotel Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/hotels.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen d-flex flex-column">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time fw-bold">9:41</div>
+                <div class="d-flex gap-2">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- Back Button -->
+            <a href="../html/hotels.html" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            
+            <!-- App Header -->
+            <div class="app-header mb-4">
+                <a href="#" class="logo text-decoration-none">Travel<span>Ease</span></a>
+            </div>
+            
+            <!-- Search Info -->
+            <div class="card mb-3">
+                <div class="text-center">
+                    <h4 class="fw-bold mb-2">Hotels in Bali, Indonesia</h4>
+                    <p class="text-muted mb-0">
+                        <i class="fas fa-calendar-alt me-2"></i>May 15 - 20, 2023
+                        <span class="mx-2">•</span>
+                        <i class="fas fa-users me-2"></i>2 Guests
+                        <span class="mx-2">•</span>
+                        <i class="fas fa-bed me-2"></i>1 Room
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="d-flex overflow-auto gap-2 mb-4 pb-2">
+                <button class="btn btn-outline-primary btn-sm px-3 active" onclick="filterResults('all')">
+                    All Hotels
+                </button>
+                <button class="btn btn-outline-primary btn-sm px-3" onclick="filterResults('5star')">
+                    <i class="fas fa-star me-1"></i>5 Star
+                </button>
+                <button class="btn btn-outline-primary btn-sm px-3" onclick="filterResults('premium')">
+                    <i class="fas fa-crown me-1"></i>Premium
+                </button>
+                <button class="btn btn-outline-primary btn-sm px-3" onclick="filterResults('budget')">
+                    <i class="fas fa-home me-1"></i>Budget
+                </button>
+                <button class="btn btn-outline-primary btn-sm px-3" onclick="filterResults('pool')">
+                    <i class="fas fa-swimming-pool me-1"></i>Pool
+                </button>
+                <button class="btn btn-outline-primary btn-sm px-3" onclick="filterResults('spa')">
+                    <i class="fas fa-spa me-1"></i>Spa
+                </button>
+            </div>
+            
+            <!-- Sort Options -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="text-muted small">
+                    <i class="fas fa-filter me-1"></i> 45 hotels found
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-sort me-1"></i>Sort By
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="sortHotels('price_low')">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="sortHotels('price_high')">Price: High to Low</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="sortHotels('rating')">Rating</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="sortHotels('name')">Name (A-Z)</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Hotel Results -->
+            <div class="hotel-results" id="hotelResults">
+                <!-- 5 Star Hotel 1 -->
+                <div class="hotel-result-card mb-3" data-category="5star pool spa" data-price="450" data-rating="4.9">
+                    <div class="hotel-result-badge bg-warning text-dark">5 STAR</div>
+                    <div class="row g-0">
+                        <div class="col-5">
+                            <div class="hotel-result-image" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=300')">
+                                <div class="hotel-result-rating">
+                                    <i class="fas fa-star"></i> 4.9
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="hotel-result-info p-3">
+                                <h6 class="fw-bold mb-1">The Oberoi Bali</h6>
+                                <p class="text-muted small mb-2">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Seminyak, Bali
+                                </p>
+                                
+                                <div class="hotel-features mb-2">
+                                    <span class="badge bg-light text-dark me-1" title="Free WiFi">
+                                        <i class="fas fa-wifi"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Swimming Pool">
+                                        <i class="fas fa-swimming-pool"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Spa">
+                                        <i class="fas fa-spa"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark" title="Restaurant">
+                                        <i class="fas fa-utensils"></i>
+                                    </span>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="fw-bold text-danger fs-5">$450</div>
+                                        <small class="text-muted">per night</small>
+                                    </div>
+                                    <button class="btn btn-danger btn-sm" onclick="bookHotel(1)">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 5 Star Hotel 2 -->
+                <div class="hotel-result-card mb-3" data-category="5star pool spa" data-price="380" data-rating="4.8">
+                    <div class="hotel-result-badge bg-warning text-dark">5 STAR</div>
+                    <div class="row g-0">
+                        <div class="col-5">
+                            <div class="hotel-result-image" style="background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=300')">
+                                <div class="hotel-result-rating">
+                                    <i class="fas fa-star"></i> 4.8
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="hotel-result-info p-3">
+                                <h6 class="fw-bold mb-1">Four Seasons Resort Bali</h6>
+                                <p class="text-muted small mb-2">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Jimbaran Bay, Bali
+                                </p>
+                                
+                                <div class="hotel-features mb-2">
+                                    <span class="badge bg-light text-dark me-1" title="Free WiFi">
+                                        <i class="fas fa-wifi"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Beach Access">
+                                        <i class="fas fa-umbrella-beach"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Spa">
+                                        <i class="fas fa-spa"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark" title="Gym">
+                                        <i class="fas fa-dumbbell"></i>
+                                    </span>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="fw-bold text-danger fs-5">$380</div>
+                                        <small class="text-muted">per night</small>
+                                    </div>
+                                    <button class="btn btn-danger btn-sm" onclick="bookHotel(2)">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Premium Hotel 1 -->
+                <div class="hotel-result-card mb-3" data-category="premium pool" data-price="320" data-rating="4.7">
+                    <div class="hotel-result-badge bg-success">PREMIUM</div>
+                    <div class="row g-0">
+                        <div class="col-5">
+                            <div class="hotel-result-image" style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=300')">
+                                <div class="hotel-result-rating">
+                                    <i class="fas fa-star"></i> 4.7
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="hotel-result-info p-3">
+                                <h6 class="fw-bold mb-1">Ayana Resort Bali</h6>
+                                <p class="text-muted small mb-2">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Jimbaran, Bali
+                                </p>
+                                
+                                <div class="hotel-features mb-2">
+                                    <span class="badge bg-light text-dark me-1" title="Free WiFi">
+                                        <i class="fas fa-wifi"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Infinity Pool">
+                                        <i class="fas fa-infinity"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Bar">
+                                        <i class="fas fa-cocktail"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark" title="Parking">
+                                        <i class="fas fa-parking"></i>
+                                    </span>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="fw-bold text-danger fs-5">$320</div>
+                                        <small class="text-muted">per night</small>
+                                    </div>
+                                    <button class="btn btn-danger btn-sm" onclick="bookHotel(3)">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Premium Hotel 2 -->
+                <div class="hotel-result-card mb-3" data-category="premium pool spa" data-price="280" data-rating="4.6">
+                    <div class="hotel-result-badge bg-success">PREMIUM</div>
+                    <div class="row g-0">
+                        <div class="col-5">
+                            <div class="hotel-result-image" style="background-image: url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=300')">
+                                <div class="hotel-result-rating">
+                                    <i class="fas fa-star"></i> 4.6
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="hotel-result-info p-3">
+                                <h6 class="fw-bold mb-1">Padma Resort Ubud</h6>
+                                <p class="text-muted small mb-2">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Ubud, Bali
+                                </p>
+                                
+                                <div class="hotel-features mb-2">
+                                    <span class="badge bg-light text-dark me-1" title="Free WiFi">
+                                        <i class="fas fa-wifi"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Spa">
+                                        <i class="fas fa-spa"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Restaurant">
+                                        <i class="fas fa-utensils"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark" title="Gym">
+                                        <i class="fas fa-dumbbell"></i>
+                                    </span>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="fw-bold text-danger fs-5">$280</div>
+                                        <small class="text-muted">per night</small>
+                                    </div>
+                                    <button class="btn btn-danger btn-sm" onclick="bookHotel(4)">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Budget Hotel 1 -->
+                <div class="hotel-result-card mb-3" data-category="budget" data-price="120" data-rating="4.5">
+                    <div class="hotel-result-badge bg-info">BUDGET</div>
+                    <div class="row g-0">
+                        <div class="col-5">
+                            <div class="hotel-result-image" style="background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=300')">
+                                <div class="hotel-result-rating">
+                                    <i class="fas fa-star"></i> 4.5
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="hotel-result-info p-3">
+                                <h6 class="fw-bold mb-1">The Bene Hotel</h6>
+                                <p class="text-muted small mb-2">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Kuta, Bali
+                                </p>
+                                
+                                <div class="hotel-features mb-2">
+                                    <span class="badge bg-light text-dark me-1" title="Free WiFi">
+                                        <i class="fas fa-wifi"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Breakfast">
+                                        <i class="fas fa-coffee"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark me-1" title="Parking">
+                                        <i class="fas fa-parking"></i>
+                                    </span>
+                                    <span class="badge bg-light text-dark" title="AC">
+                                        <i class="fas fa-snowflake"></i>
+                                    </span>
+                                </div>
+                                
+                                <div class="d-flex

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Hotels Booking</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/hotels.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen d-flex flex-column">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time fw-bold">9:41</div>
+                <div class="d-flex gap-2">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- Back Button -->
+            <a href="../html/dashboard.html" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            
+            <!-- App Header -->
+            <div class="app-header mb-4">
+                <a href="#" class="logo text-decoration-none">Travel<span>Ease</span></a>
+                <div class="avatar" onclick="showProfile()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            
+            <!-- Search Section -->
+            <div class="card mb-4">
+                <h4 class="fw-bold mb-3">Find Your Perfect Stay</h4>
+                
+                <!-- Search Form -->
+                <form id="hotelSearchForm">
+                    <div class="row g-3 mb-3">
+                        <div class="col-8">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-map-marker-alt me-1"></i>Destination
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-end-0">
+                                    <i class="fas fa-search text-muted"></i>
+                                </span>
+                                <input type="text" class="form-control" id="destination" placeholder="Where do you want to stay?" value="Bali, Indonesia">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-users me-1"></i>Guests
+                            </label>
+                            <select class="form-select" id="guests">
+                                <option>1 Guest</option>
+                                <option selected>2 Guests</option>
+                                <option>3 Guests</option>
+                                <option>4 Guests</option>
+                                <option>5+ Guests</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-calendar-alt me-1"></i>Check-in
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="May 15, 2023" readonly onclick="showDatePicker('checkin')">
+                                <span class="input-group-text bg-transparent">
+                                    <i class="fas fa-calendar text-muted"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-calendar-alt me-1"></i>Check-out
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="May 20, 2023" readonly onclick="showDatePicker('checkout')">
+                                <span class="input-group-text bg-transparent">
+                                    <i class="fas fa-calendar text-muted"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">
+                            <i class="fas fa-bed me-1"></i>Rooms
+                        </label>
+                        <div class="d-flex align-items-center gap-3">
+                            <button type="button" class="btn btn-outline-danger rounded-circle p-0 d-flex align-items-center justify-content-center" 
+                                    style="width: 36px; height: 36px;" onclick="updateRoomCount(-1)" id="decreaseRoomBtn">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <div class="fw-bold fs-5" id="roomCount">1</div>
+                            <button type="button" class="btn btn-outline-danger rounded-circle p-0 d-flex align-items-center justify-content-center" 
+                                    style="width: 36px; height: 36px;" onclick="updateRoomCount(1)" id="increaseRoomBtn">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <div class="ms-auto">
+                                <span class="badge bg-danger">5 nights</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold">
+                        <i class="fas fa-search me-2"></i>Search Hotels
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Popular Destinations -->
+            <div class="mb-4">
+                <h5 class="fw-bold mb-3">Popular Destinations</h5>
+                <div class="d-flex overflow-auto gap-3 pb-2">
+                    <div class="destination-card active" onclick="searchDestination('bali')">
+                        <div class="destination-img" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=300')">
+                            <div class="destination-overlay">
+                                <i class="fas fa-umbrella-beach"></i>
+                                <div class="destination-name">Bali</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="destination-card" onclick="searchDestination('thailand')">
+                        <div class="destination-img" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=300')">
+                            <div class="destination-overlay">
+                                <i class="fas fa-landmark"></i>
+                                <div class="destination-name">Thailand</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="destination-card" onclick="searchDestination('maldives')">
+                        <div class="destination-img" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=300')">
+                            <div class="destination-overlay">
+                                <i class="fas fa-water"></i>
+                                <div class="destination-name">Maldives</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="destination-card" onclick="searchDestination('dubai')">
+                        <div class="destination-img" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=300')">
+                            <div class="destination-overlay">
+                                <i class="fas fa-building"></i>
+                                <div class="destination-name">Dubai</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hotel Categories -->
+            <div class="mb-4">
+                <h5 class="fw-bold mb-3">Hotel Categories</h5>
+                <div class="row g-3">
+                    <div class="col-4">
+                        <div class="category-card" onclick="filterHotels('5star')">
+                            <div class="category-icon bg-gold">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="category-name">5 Star</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="category-card" onclick="filterHotels('premium')">
+                            <div class="category-icon bg-silver">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="category-name">Premium</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="category-card" onclick="filterHotels('budget')">
+                            <div class="category-icon bg-bronze">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="category-name">Budget</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured Hotels -->
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold">Featured Hotels</h5>
+                    <a href="hotels-results.html" class="text-danger fw-bold small text-decoration-none">
+                        See All <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+                
+                <!-- Hotel 1 - 5 Star -->
+                <div class="hotel-card mb-3" onclick="viewHotelDetails(1)">
+                    <div class="hotel-badge">5 STAR</div>
+                    <div class="hotel-image" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=400')">
+                        <div class="hotel-rating">
+                            <i class="fas fa-star"></i> 4.9
+                        </div>
+                    </div>
+                    <div class="hotel-info p-3">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h6 class="fw-bold mb-1">The Oberoi Bali</h6>
+                                <p class="text-muted small mb-0">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Seminyak, Bali
+                                </p>
+                            </div>
+                            <div class="text-end">
+                                <div class="fw-bold text-danger">$450</div>
+                                <small class="text-muted">per night</small>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="hotel-features">
+                                <span class="badge bg-light text-dark me-1">
+                                    <i class="fas fa-wifi"></i>
+                                </span>
+                                <span class="badge bg-light text-dark me-1">
+                                    <i class="fas fa-swimming-pool"></i>
+                                </span>
+                                <span class="badge bg-light text-dark">
+                                    <i class="fas fa-utensils"></i>
+                                </span>
+                            </div>
+                            <button class="btn btn-danger btn-sm">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hotel 2 - Premium -->
+                <div class="hotel-card mb-3" onclick="viewHotelDetails(2)">
+                    <div class="hotel-badge bg-success">PREMIUM</div>
+                    <div class="hotel-image" style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400')">
+                        <div class="hotel-rating">
+                            <i class="fas fa-star"></i> 4.7
+                        </div>
+                    </div>
+                    <div class="hotel-info p-3">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h6 class="fw-bold mb-1">Ayana Resort Bali</h6>
+                                <p class="text-muted small mb-0">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Jimbaran, Bali
+                                </p>
+                            </div>
+                            <div class="text-end">
+                                <div class="fw-bold text-danger">$320</div>
+                                <small class="text-muted">per night</small>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="hotel-features">
+                                <span class="badge bg-light text-dark me-1">
+                                    <i class="fas fa-spa"></i>
+                                </span>
+                                <span class="badge bg-light text-dark me-1">
+                                    <i class="fas fa-dumbbell"></i>
+                                </span>
+                                <span class="badge bg-light text-dark">
+                                    <i class="fas fa-cocktail"></i>
+                                </span>
+                            </div>
+                            <button class="btn btn-danger btn-sm">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hotel 3 - Budget -->
+                <div class="hotel-card" onclick="viewHotelDetails(3)">
+                    <div class="hotel-badge bg-info">BUDGET</div>
+                    <div class="hotel-image" style="background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=400')">
+                        <div class="hotel-rating">
+                            <i class="fas fa-star"></i> 4.5
+                        </div>
+                    </div>
+                    <div class="hotel-info p-3">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h6 class="fw-bold mb-1">The Bene Hotel</h6>
+                                <p class="text-muted small mb-0">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Kuta, Bali
+                                </p>
+                            </div>
+                            <div class="text-end">
+                                <div class="fw-bold text-danger">$120</div>
+                                <small class="text-muted">per night</small>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="hotel-features">
+                                <span class="badge bg-light text-dark me-1">
+                                    <i class="fas fa-parking"></i>
+                                </span>
+                                <span class="badge bg-light text-dark me-1">
+                                    <i class="fas fa-utensils"></i>
+                                </span>
+                                <span class="badge bg-light text-dark">
+                                    <i class="fas fa-wifi"></i>
+                                </span>
+                            </div>
+                            <button class="btn btn-danger btn-sm">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav d-flex justify-content-around">
+            <a href="../html/dashboard.html" class="nav-item">
+                <div class="nav-icon"><i class="fas fa-home"></i></div>
+                <div class="nav-label">Home</div>
+            </a>
+            <a href="../html/flight-booking.html" class="nav-item">
+                <div class="nav-icon"><i class="fas fa-plane"></i></div>
+                <div class="nav-label">Flights</div>
+            </a>
+            <a href="../html/hotels.html" class="nav-item active">
+                <div class="nav-icon"><i class="fas fa-hotel"></i></div>
+                <div class="nav-label">Hotels</div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"><i class="fas fa-suitcase"></i></div>
+                <div class="nav-label">Trips</div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../javascript/script.js"></script>
+    <script>
+        let roomCount = 1;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hotel search form
+            document.getElementById('hotelSearchForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const destination = document.getElementById('destination').value;
+                const guests = document.getElementById('guests').value;
+                
+                if (!destination) {
+                    showToast('Please enter a destination', 'error');
+                    return;
+                }
+                
+                showLoading(() => {
+                    setTimeout(() => {
+                        showToast(`Searching hotels in ${destination}`, 'info');
+                        window.location.href = 'hotels-results.html';
+                    }, 1500);
+                });
+            });
+        });
+        
+        function updateRoomCount(change) {
+            roomCount += change;
+            
+            // Limit between 1 and 5
+            if (roomCount < 1) roomCount = 1;
+            if (roomCount > 5) roomCount = 5;
+            
+            document.getElementById('roomCount').textContent = roomCount;
+            
+            // Update button states
+            document.getElementById('decreaseRoomBtn').disabled = roomCount <= 1;
+            document.getElementById('increaseRoomBtn').disabled = roomCount >= 5;
+            
+            // Show feedback
+            if (change > 0) {
+                showToast('Room added', 'success', 1000);
+            } else if (change < 0) {
+                showToast('Room removed', 'info', 1000);
+            }
+        }
+        
+        function searchDestination(destination) {
+            const destinations = {
+                bali: 'Bali, Indonesia',
+                thailand: 'Phuket, Thailand',
+                maldives: 'Malé, Maldives',
+                dubai: 'Dubai, UAE'
+            };
+            
+            const dest = destinations[destination];
+            if (dest) {
+                document.getElementById('destination').value = dest;
+                document.querySelectorAll('.destination-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+                event.currentTarget.classList.add('active');
+                showToast(`Searching ${dest}`, 'info');
+            }
+        }
+        
+        function filterHotels(category) {
+            showToast(`Showing ${category} hotels`, 'info');
+            // In a real app, this would filter hotels
+        }
+        
+        function viewHotelDetails(hotelId) {
+            showLoading(() => {
+                setTimeout(() => {
+                    window.location.href = `hotel-details.html?id=${hotelId}`;
+                }, 1000);
+            });
+        }
+        
+        function showProfile() {
+            showToast('Profile menu would open here', 'info');
+        }
+        
+        function showDatePicker(type) {
+            const date = prompt(`Enter ${type} date (MM/DD/YYYY):`, '05/15/2023');
+            if (date) {
+                const formattedDate = formatDate(date);
+                document.querySelector(`[onclick="showDatePicker('${type}')"]`).value = formattedDate;
+            }
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+        }
+    </script>
+</body>
+</html>

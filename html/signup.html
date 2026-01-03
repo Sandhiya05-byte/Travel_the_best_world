@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Create Account</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen d-flex flex-column">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time fw-bold">9:41</div>
+                <div class="d-flex gap-2">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- Back Button -->
+            <a href="../html/login.html" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            
+            <!-- App Header -->
+            <div class="app-header mb-4">
+                <a href="#" class="logo text-decoration-none">Travel<span>Ease</span></a>
+            </div>
+            
+            <!-- Progress Steps -->
+            <div class="signup-progress mb-4">
+                <div class="progress-step completed">1</div>
+                <div class="progress-line active"></div>
+                <div class="progress-step active">2</div>
+                <div class="progress-line"></div>
+                <div class="progress-step">3</div>
+            </div>
+            
+            <!-- Title -->
+            <h2 class="screen-title mb-2">Create Account</h2>
+            <p class="text-muted mb-4">Join TravelEase and start your journey</p>
+            
+            <!-- Signup Form -->
+            <form id="signupForm" class="mb-3">
+                <!-- Full Name -->
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">
+                        <i class="fas fa-user me-2"></i>Full Name
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0">
+                            <i class="fas fa-user-circle text-muted"></i>
+                        </span>
+                        <input type="text" id="fullName" class="form-control" placeholder="John Doe" required>
+                    </div>
+                </div>
+                
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email Address
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0">
+                            <i class="fas fa-at text-muted"></i>
+                        </span>
+                        <input type="email" id="email" class="form-control" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                
+                <!-- Phone Number -->
+                <div class="mb-3">
+                    <label for="phone" class="form-label">
+                        <i class="fas fa-phone me-2"></i>Phone Number
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0">
+                            +1
+                        </span>
+                        <input type="tel" id="phone" class="form-control" placeholder="(555) 123-4567" required>
+                    </div>
+                </div>
+                
+                <!-- Password -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Create Password
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0">
+                            <i class="fas fa-key text-muted"></i>
+                        </span>
+                        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                        <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar" id="passwordStrength"></div>
+                    </div>
+                    <div class="form-text">Use 8+ characters with a mix of letters, numbers & symbols</div>
+                </div>
+                
+                <!-- Confirm Password -->
+                <div class="mb-4">
+                    <label for="confirmPassword" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Confirm Password
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0">
+                            <i class="fas fa-key text-muted"></i>
+                        </span>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                </div>
+                
+                <!-- Account Type -->
+                <div class="mb-4">
+                    <label class="form-label mb-3">
+                        <i class="fas fa-user-tag me-2"></i>Account Type
+                    </label>
+                    <div class="signup-options row g-3">
+                        <div class="col-6">
+                            <div class="option-card active" onclick="selectAccountType('personal')">
+                                <div class="option-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="fw-bold">Personal</div>
+                                <div class="small text-muted mt-1">For individual travel</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="option-card" onclick="selectAccountType('business')">
+                                <div class="option-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <div class="fw-bold">Business</div>
+                                <div class="small text-muted mt-1">For corporate travel</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Travel Preferences -->
+                <div class="mb-4">
+                    <label class="form-label mb-3">
+                        <i class="fas fa-heart me-2"></i>Travel Preferences (Optional)
+                    </label>
+                    <div class="interest-tags">
+                        <span class="interest-tag" onclick="toggleInterest(this)">Beach</span>
+                        <span class="interest-tag active" onclick="toggleInterest(this)">Mountains</span>
+                        <span class="interest-tag" onclick="toggleInterest(this)">City</span>
+                        <span class="interest-tag" onclick="toggleInterest(this)">Adventure</span>
+                        <span class="interest-tag" onclick="toggleInterest(this)">Cultural</span>
+                        <span class="interest-tag" onclick="toggleInterest(this)">Luxury</span>
+                        <span class="interest-tag" onclick="toggleInterest(this)">Budget</span>
+                        <span class="interest-tag" onclick="toggleInterest(this)">Family</span>
+                    </div>
+                </div>
+                
+                <!-- Terms and Conditions -->
+                <div class="terms-checkbox mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="terms" required>
+                        <label class="form-check-label small" for="terms">
+                            I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms & Conditions</a> 
+                            and <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Newsletter -->
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="newsletter" checked>
+                    <label class="form-check-label small" for="newsletter">
+                        Send me travel deals, personalized recommendations and updates
+                    </label>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100 py-3 fw-bold mb-3">
+                    <i class="fas fa-user-plus me-2"></i>Create Account
+                </button>
+                
+                <!-- Social Signup -->
+                <div class="text-center mb-3">
+                    <span class="text-muted small">or sign up with</span>
+                </div>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-outline-primary w-100 py-3" onclick="signupWithGoogle()">
+                            <i class="fab fa-google me-2"></i>Google
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-outline-primary w-100 py-3" onclick="signupWithFacebook()">
+                            <i class="fab fa-facebook me-2"></i>Facebook
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Already have account -->
+                <div class="text-center">
+                    <span class="text-muted">Already have an account? </span>
+                    <a href="login.html" class="text-danger fw-bold text-decoration-none">Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Terms & Conditions Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Terms & Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>1. Acceptance of Terms</h6>
+                    <p class="small">By creating an account, you agree to be bound by these Terms & Conditions.</p>
+                    
+                    <h6>2. Account Registration</h6>
+                    <p class="small">You must provide accurate and complete information when creating your account.</p>
+                    
+                    <h6>3. Booking & Payments</h6>
+                    <p class="small">All bookings are subject to availability and confirmation. Prices may change without notice.</p>
+                    
+                    <h6>4. Cancellation Policy</h6>
+                    <p class="small">Cancellation policies vary by service provider. Please review before booking.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Understand</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Privacy Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>1. Information We Collect</h6>
+                    <p class="small">We collect information you provide directly, including name, email, phone, and travel preferences.</p>
+                    
+                    <h6>2. How We Use Your Information</h6>
+                    <p class="small">To provide and improve our services, communicate with you, and personalize your experience.</p>
+                    
+                    <h6>3. Information Sharing</h6>
+                    <p class="small">We do not sell your personal information. We share information only with service providers necessary for your bookings.</p>
+                    
+                    <h6>4. Data Security</h6>
+                    <p class="small">We implement security measures to protect your information from unauthorized access.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Understand</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <script>
+        let accountType = 'personal';
+        let selectedInterests = ['Mountains'];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            document.getElementById('togglePassword').addEventListener('click', function() {
+                const passwordInput = document.getElementById('password');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+            
+            // Password strength indicator
+            document.getElementById('password').addEventListener('input', function() {
+                checkPasswordStrength(this.value);
+            });
+            
+            // Form submission
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!validateSignupForm()) {
+                    return;
+                }
+                
+                showLoading(() => {
+                    setTimeout(() => {
+                        showToast('Account created successfully!', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1500);
+                    }, 2000);
+                });
+            });
+            
+            // Confirm password validation
+            document.getElementById('confirmPassword').addEventListener('input', function() {
+                validatePasswordMatch();
+            });
+        });
+        
+        function selectAccountType(type) {
+            accountType = type;
+            
+            // Update active state
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.target.closest('.option-card').classList.add('active');
+        }
+        
+        function toggleInterest(element) {
+            element.classList.toggle('active');
+            const interest = element.textContent;
+            
+            if (element.classList.contains('active')) {
+                if (!selectedInterests.includes(interest)) {
+                    selectedInterests.push(interest);
+                }
+            } else {
+                selectedInterests = selectedInterests.filter(item => item !== interest);
+            }
+        }
+        
+        function checkPasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrength');
+            let strength = 0;
+            
+            // Length check
+            if (password.length >= 8) strength += 25;
+            if (password.length >= 12) strength += 25;
+            
+            // Complexity checks
+            if (/[A-Z]/.test(password)) strength += 25;
+            if (/[0-9]/.test(password)) strength += 15;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 10;
+            
+            // Update strength bar
+            strengthBar.style.width = Math.min(strength, 100) + '%';
+            
+            // Update color
+            if (strength < 50) {
+                strengthBar.className = 'strength-bar strength-weak';
+            } else if (strength < 75) {
+                strengthBar.className = 'strength-bar strength-medium';
+            } else {
+                strengthBar.className = 'strength-bar strength-strong';
+            }
+        }
+        
+        function validatePasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const confirmInput = document.getElementById('confirmPassword');
+            
+            if (confirmPassword && password !== confirmPassword) {
+                confirmInput.classList.add('is-invalid');
+                showToast('Passwords do not match', 'error', 2000);
+                return false;
+            } else {
+                confirmInput.classList.remove('is-invalid');
+                return true;
+            }
+        }
+        
+        function validateSignupForm() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+            
+            // Basic validation
+            if (!fullName || !email || !phone || !password || !confirmPassword) {
+                showToast('Please fill in all required fields', 'error');
+                return false;
+            }
+            
+            if (!validateEmail(email)) {
+                showToast('Please enter a valid email address', 'error');
+                return false;
+            }
+            
+            if (!validatePhone(phone)) {
+                showToast('Please enter a valid phone number', 'error');
+                return false;
+            }
+            
+            if (password.length < 8) {
+                showToast('Password must be at least 8 characters', 'error');
+                return false;
+            }
+            
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return false;
+            }
+            
+            if (!terms) {
+                showToast('Please accept the Terms & Conditions', 'error');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        function validatePhone(phone) {
+            // Simple phone validation
+            const re = /^[\d\s\(\)\-]+$/;
+            return re.test(phone) && phone.replace(/\D/g, '').length >= 10;
+        }
+        
+        function signupWithGoogle() {
+            showLoading(() => {
+                setTimeout(() => {
+                    showToast('Google signup would open here', 'info');
+                }, 1000);
+            });
+        }
+        
+        function signupWithFacebook() {
+            showLoading(() => {
+                setTimeout(() => {
+                    showToast('Facebook signup would open here', 'info');
+                }, 1000);
+            });
+        }
+        
+        // Add country code selector
+        function showCountryCodeSelector() {
+            const modal = `
+                <div class="modal fade" id="countryModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Select Country Code</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control mb-3" placeholder="Search country..." id="countrySearch">
+                                <div style="max-height: 300px; overflow-y: auto;">
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item list-group-item-action" onclick="selectCountryCode('+1', 'US')">
+                                            <i class="fas fa-flag-usa me-2"></i> United States (+1)
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action" onclick="selectCountryCode('+44', 'GB')">
+                                            <i class="fas fa-flag me-2"></i> United Kingdom (+44)
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action" onclick="selectCountryCode('+91', 'IN')">
+                                            <i class="fas fa-flag me-2"></i> India (+91)
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action" onclick="selectCountryCode('+61', 'AU')">
+                                            <i class="fas fa-flag me-2"></i> Australia (+61)
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action" onclick="selectCountryCode('+49', 'DE')">
+                                            <i class="fas fa-flag me-2"></i> Germany (+49)
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add modal to body if not exists
+            if (!document.getElementById('countryModal')) {
+                document.body.insertAdjacentHTML('beforeend', modal);
+                const countryModal = new bootstrap.Modal(document.getElementById('countryModal'));
+                countryModal.show();
+            }
+        }
+        
+        function selectCountryCode(code, country) {
+            // Update the phone input prefix
+            const phoneInput = document.getElementById('phone');
+            phoneInput.value = `(${code}) `;
+            phoneInput.focus();
+            
+            // Close modal
+            bootstrap.Modal.getInstance(document.getElementById('countryModal')).hide();
+        }
+    </script>
+</body>
+</html>

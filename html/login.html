@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Welcome Back</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen d-flex flex-column">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time fw-bold">9:41</div>
+                <div class="d-flex gap-2">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- Back Button -->
+            <a href="../html/onbording.html" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            
+            <!-- App Header -->
+            <div class="app-header">
+                <a href="#" class="logo text-decoration-none">Travel<span>Ease</span></a>
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            
+            <!-- Title -->
+            <h2 class="screen-title mb-3">Welcome Back!</h2>
+            <p class="text-muted mb-4">Sign in to continue your travel journey</p>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="mb-4">
+                <!-- Email -->
+                <div class="mb-4">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email Address
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0">
+                            <i class="fas fa-user text-muted"></i>
+                        </span>
+                        <input type="email" id="email" class="form-control" placeholder="you@example.com" required>
+                    </div>
+                </div>
+                
+                <!-- Password -->
+                <div class="mb-4">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Password
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0">
+                            <i class="fas fa-key text-muted"></i>
+                        </span>
+                        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                        <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Remember & Forgot -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="text-danger fw-bold text-decoration-none" id="forgotPassword">
+                        Forgot Password?
+                    </a>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100 py-3 mb-4">
+                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                </button>
+                
+                <!-- Divider -->
+                <div class="position-relative text-center mb-4">
+                    <hr class="my-4">
+                    <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted">
+                        or continue with
+                    </span>
+                </div>
+                
+                <!-- Social Login -->
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-outline-primary w-100 py-3" id="googleLogin">
+                            <i class="fab fa-google me-2"></i>Google
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-outline-primary w-100 py-3" id="appleLogin">
+                            <i class="fab fa-apple me-2"></i>Apple
+                        </button>
+                    </div>
+                </div>
+            </form>
+            
+            <!-- Sign Up Link -->
+            <div class="text-center mt-auto pt-4 border-top">
+                <span class="text-muted">Don't have an account? </span>
+                <a href="../html/signup.html" class="text-danger fw-bold text-decoration-none">
+                    Sign Up Now
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../javascript/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            document.getElementById('togglePassword').addEventListener('click', function() {
+                const passwordInput = document.getElementById('password');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+            
+            // Form submission
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                if (!email || !password) {
+                    showToast('Please fill in all fields', 'error');
+                    return;
+                }
+                
+                if (!validateEmail(email)) {
+                    showToast('Please enter a valid email address', 'error');
+                    return;
+                }
+                
+                showLoading(() => {
+                    setTimeout(() => {
+                        showToast('Successfully logged in!', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1000);
+                    }, 1500);
+                });
+            });
+            
+            // Forgot password
+            document.getElementById('forgotPassword').addEventListener('click', function(e) {
+                e.preventDefault();
+                const email = prompt('Enter your email to reset password:');
+                if (email && validateEmail(email)) {
+                    showToast('Password reset link sent to your email', 'success');
+                }
+            });
+            
+            // Social login
+            document.getElementById('googleLogin').addEventListener('click', function() {
+                showToast('Google login would open here', 'info');
+            });
+            
+            document.getElementById('appleLogin').addEventListener('click', function() {
+                showToast('Apple login would open here', 'info');
+            });
+            
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+        });
+    </script>
+</body>
+</html>

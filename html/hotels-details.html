@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Hotel Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/hotels.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen d-flex flex-column">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time fw-bold">9:41</div>
+                <div class="d-flex gap-2">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- Back Button -->
+            <a href="../html/hotels-result.html" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            
+            <!-- Hotel Images Carousel -->
+            <div class="hotel-gallery mb-4">
+                <div id="hotelCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="hotel-main-image" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800')">
+                                <div class="hotel-badge">5 STAR</div>
+                                <div class="hotel-rating-overlay">
+                                    <i class="fas fa-star"></i> 4.9 • 124 Reviews
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="hotel-main-image" style="background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800')"></div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="hotel-main-image" style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800')"></div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#hotelCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#hotelCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                    <div class="image-count">1/3</div>
+                </div>
+            </div>
+            
+            <!-- Hotel Info -->
+            <div class="px-3">
+                <h4 class="fw-bold mb-2">The Oberoi Bali</h4>
+                <p class="text-muted mb-3">
+                    <i class="fas fa-map-marker-alt me-2"></i>Seminyak, Bali, Indonesia
+                    <span class="ms-3">
+                        <i class="fas fa-walking me-1"></i> 200m to beach
+                    </span>
+                </p>
+                
+                <!-- Hotel Features -->
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="hotel-feature">
+                        <i class="fas fa-wifi me-1"></i> Free WiFi
+                    </span>
+                    <span class="hotel-feature">
+                        <i class="fas fa-swimming-pool me-1"></i> Pool
+                    </span>
+                    <span class="hotel-feature">
+                        <i class="fas fa-spa me-1"></i> Spa
+                    </span>
+                    <span class="hotel-feature">
+                        <i class="fas fa-utensils me-1"></i> 3 Restaurants
+                    </span>
+                    <span class="hotel-feature">
+                        <i class="fas fa-dumbbell me-1"></i> Gym
+                    </span>
+                    <span class="hotel-feature">
+                        <i class="fas fa-parking me-1"></i> Parking
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Booking Summary -->
+            <div class="card mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <div class="fw-bold fs-4 text-danger">$450</div>
+                        <small class="text-muted">per night • 5 nights: $2,250</small>
+                    </div>
+                    <div class="text-end">
+                        <div class="fw-bold">May 15 - 20, 2023</div>
+                        <small class="text-muted">2 Guests • 1 Room</small>
+                    </div>
+                </div>
+                
+                <!-- Room Selection -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-3">Select Room Type</h6>
+                    <div class="room-options">
+                        <div class="room-option active" onclick="selectRoom(1)">
+                            <div class="room-type">
+                                <div class="fw-bold">Deluxe Ocean View</div>
+                                <div class="text-muted small">King Bed • 45 m² • Ocean View</div>
+                            </div>
+                            <div class="room-price">
+                                <div class="fw-bold text-danger">$450</div>
+                                <small class="text-muted">per night</small>
+                            </div>
+                        </div>
+                        
+                        <div class="room-option" onclick="selectRoom(2)">
+                            <div class="room-type">
+                                <div class="fw-bold">Premium Suite</div>
+                                <div class="text-muted small">King Bed • 65 m² • Private Pool</div>
+                            </div>
+                            <div class="room-price">
+                                <div class="fw-bold text-danger">$650</div>
+                                <small class="text-muted">per night</small>
+                            </div>
+                        </div>
+                        
+                        <div class="room-option" onclick="selectRoom(3)">
+                            <div class="room-type">
+                                <div class="fw-bold">Garden Villa</div>
+                                <div class="text-muted small">Queen Bed • 35 m² • Garden View</div>
+                            </div>
+                            <div class="room-price">
+                                <div class="fw-bold text-danger">$380</div>
+                                <small class="text-muted">per night</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Amenities Included -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-3">Amenities Included</h6>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <div class="amenity-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>Free Breakfast</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="amenity-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>Air Conditioning</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="amenity-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>Mini Bar</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="amenity-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>Safe Deposit Box</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="amenity-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>Flat Screen TV</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="amenity-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>24/7 Room Service</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Book Now Button -->
+                <button class="btn btn-primary w-100 py-3 fw-bold" onclick="bookNow()">
+                    <i class="fas fa-calendar-check me-2"></i>Book Now - $2,250
+                </button>
+            </div>
+            
+            <!-- Hotel Description -->
+            <div class="card mb-4">
+                <h6 class="fw-bold mb-3">About This Hotel</h6>
+                <p class="text-muted mb-3">
+                    Located on the beachfront in Seminyak, The Oberoi Bali offers luxurious accommodation with 
+                    private pools and stunning ocean views. This 5-star resort features world-class amenities 
+                    including multiple restaurants, a full-service spa, and two outdoor pools.
+                </p>
+                
+                <!-- Highlights -->
+                <div class="hotel-highlights">
+                    <div class="highlight-item">
+                        <i class="fas fa-star text-warning"></i>
+                        <div>
+                            <div class="fw-bold">Luxury Experience</div>
+                            <div class="text-muted small">Award-winning 5-star service</div>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-umbrella-beach text-info"></i>
+                        <div>
+                            <div class="fw-bold">Beachfront Location</div>
+                            <div class="text-muted small">Direct access to private beach</div>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-award text-danger"></i>
+                        <div>
+                            <div class="fw-bold">Top Rated</div>
+                            <div class="text-muted small">4.9/5 from 124 reviews</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reviews -->
+            <div class="card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold mb-0">Guest Reviews</h6>
+                    <div class="review-rating">
+                        <span class="fw-bold">4.9</span>
+                        <i class="fas fa-star text-warning"></i>
+                        <span class="text-muted small">(124 reviews)</span>
+                    </div>
+                </div>
+                
+                <!-- Review 1 -->
+                <div class="review-item mb-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <div class="fw-bold">Michael Johnson</div>
+                        <div class="text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        "Absolutely stunning resort! The service was exceptional and the private pool villa was perfect."
+                    </p>
+                    <div class="text-muted extra-small">Stayed in May 2023</div>
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="review-item">
+                    <div class="d-flex justify-content-between mb-2">
+                        <div class="fw-bold">Sarah Williams</div>
+                        <div class="text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        "Beautiful property with amazing beach access. The spa treatments were divine!"
+                    </p>
+                    <div class="text-muted extra-small">Stayed in April 2023</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../javascript/script.js"></script>
+    <script>
+        let selectedRoom = 1;
+        let selectedRoomPrice = 450;
+        const nights = 5;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize carousel
+            const carousel = new bootstrap.Carousel(document.getElementById('hotelCarousel'));
+            
+            // Update image count
+            document.getElementById('hotelCarousel').addEventListener('slid.bs.carousel', function (e) {
+                const activeIndex = Array.from(this.querySelectorAll('.carousel-item')).indexOf(this.querySelector('.carousel-item.active'));
+                const countElement = this.querySelector('.image-count');
+                if (countElement) {
+                    countElement.textContent = `${activeIndex + 1}/3`;
+                }
+            });
+        });
+        
+        function selectRoom(roomId) {
+            const roomOptions = document.querySelectorAll('.room-option');
+            roomOptions.forEach(option => option.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            selectedRoom = roomId;
+            
+            // Update price based on room selection
+            const roomPrices = {
+                1: 450,
+                2: 650,
+                3: 380
+            };
+            
+            selectedRoomPrice = roomPrices[roomId];
+            const totalPrice = selectedRoomPrice * nights;
+            
+            // Update book button
+            const bookButton = document.querySelector('.btn-primary');
+            bookButton.innerHTML = `<i class="fas fa-calendar-check me-2"></i>Book Now - $${totalPrice}`;
+            
+            showToast(`Selected Room ${roomId}`, 'success');
+        }
+        
+        function bookNow() {
+            showLoading(() => {
+                // Store booking details
+                localStorage.setItem('hotelBooking', JSON.stringify({
+                    hotelName: 'The Oberoi Bali',
+                    roomType: selectedRoom === 1 ? 'Deluxe Ocean View' : 
+                              selectedRoom === 2 ? 'Premium Suite' : 'Garden Villa',
+                    price: selectedRoomPrice,
+                    nights: nights,
+                    total: selectedRoomPrice * nights,
+                    checkin: 'May 15, 2023',
+                    checkout: 'May 20, 2023',
+                    guests: 2
+                }));
+                
+                setTimeout(() => {
+                    window.location.href = 'hotel-booking-confirmation.html';
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>
