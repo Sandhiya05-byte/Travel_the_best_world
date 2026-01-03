@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Select Seats</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen d-flex flex-column">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time fw-bold">9:41</div>
+                <div class="d-flex gap-2">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- Back Button -->
+            <a href="flight-results.html" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            
+            <!-- App Header -->
+            <div class="app-header mb-4">
+                <a href="#" class="logo text-decoration-none">Travel<span>Ease</span></a>
+            </div>
+            
+            <!-- Flight Info -->
+            <div class="card mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="fw-bold mb-1">British Airways BA 178</h5>
+                        <p class="text-muted small mb-0">
+                            <i class="fas fa-plane-departure me-1"></i>JFK → LHR
+                            <span class="mx-2">•</span>
+                            <i class="fas fa-calendar-alt me-1"></i>May 15, 2023
+                            <span class="mx-2">•</span>
+                            <i class="fas fa-users me-1"></i>2 Passengers
+                        </p>
+                    </div>
+                    <div class="text-end">
+                        <div class="fw-bold text-danger">$599</div>
+                        <small class="text-muted">per person</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seat Selection Container -->
+            <div class="seat-selection-container">
+                <h4 class="fw-bold mb-3 text-center">Select Your Seats</h4>
+                
+                <!-- Seat Legend -->
+                <div class="seat-legend">
+                    <div class="legend-item">
+                        <div class="legend-color legend-available"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-selected"></div>
+                        <span>Selected</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-occupied"></div>
+                        <span>Occupied</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-premium"></div>
+                        <span>Premium</span>
+                    </div>
+                </div>
+                
+                <!-- Airplane Layout -->
+                <div class="airplane-layout">
+                    <div class="airplane-nose">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    
+                    <!-- Economy Class -->
+                    <div class="cabin-section">
+                        <div class="cabin-title">
+                            <i class="fas fa-chair"></i>
+                            <span>Economy Class</span>
+                            <small class="text-muted ms-2">($599 per seat)</small>
+                        </div>
+                        
+                        <div class="seat-map" id="economySeats">
+                            <!-- Row 10 -->
+                            <div class="seat-row">
+                                <div class="seat-row-label">10</div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="10A" data-price="599">
+                                    A
+                                    <div class="seat-info-tooltip">10A - Window • $599</div>
+                                </div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="10B" data-price="599">
+                                    B
+                                    <div class="seat-info-tooltip">10B - Middle • $599</div>
+                                </div>
+                                <div class="seat occupied">C</div>
+                                <div class="seat aisle"></div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="10D" data-price="599">
+                                    D
+                                    <div class="seat-info-tooltip">10D - Aisle • $599</div>
+                                </div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="10E" data-price="599">
+                                    E
+                                    <div class="seat-info-tooltip">10E - Aisle • $599</div>
+                                </div>
+                                <div class="seat occupied">F</div>
+                            </div>
+                            
+                            <!-- Row 11 -->
+                            <div class="seat-row">
+                                <div class="seat-row-label">11</div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="11A" data-price="599">
+                                    A
+                                    <div class="seat-info-tooltip">11A - Window • $599</div>
+                                </div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="11B" data-price="599">
+                                    B
+                                    <div class="seat-info-tooltip">11B - Middle • $599</div>
+                                </div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="11C" data-price="599">
+                                    C
+                                    <div class="seat-info-tooltip">11C - Aisle • $599</div>
+                                </div>
+                                <div class="seat aisle"></div>
+                                <div class="seat occupied">D</div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="11E" data-price="599">
+                                    E
+                                    <div class="seat-info-tooltip">11E - Middle • $599</div>
+                                </div>
+                                <div class="seat occupied">F</div>
+                            </div>
+                            
+                            <!-- Row 12 -->
+                            <div class="seat-row">
+                                <div class="seat-row-label">12</div>
+                                <div class="seat legroom available" onclick="selectSeat(this)" data-seat="12A" data-price="699">
+                                    A
+                                    <div class="seat-info-tooltip">12A - Window • Extra Legroom • $699</div>
+                                </div>
+                                <div class="seat legroom available" onclick="selectSeat(this)" data-seat="12B" data-price="699">
+                                    B
+                                    <div class="seat-info-tooltip">12B - Middle • Extra Legroom • $699</div>
+                                </div>
+                                <div class="seat legroom occupied">C</div>
+                                <div class="seat aisle"></div>
+                                <div class="seat legroom available" onclick="selectSeat(this)" data-seat="12D" data-price="699">
+                                    D
+                                    <div class="seat-info-tooltip">12D - Aisle • Extra Legroom • $699</div>
+                                </div>
+                                <div class="seat legroom available" onclick="selectSeat(this)" data-seat="12E" data-price="699">
+                                    E
+                                    <div class="seat-info-tooltip">12E - Middle • Extra Legroom • $699</div>
+                                </div>
+                                <div class="seat legroom available" onclick="selectSeat(this)" data-seat="12F" data-price="699">
+                                    F
+                                    <div class="seat-info-tooltip">12F - Window • Extra Legroom • $699</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Row 13 -->
+                            <div class="seat-row">
+                                <div class="seat-row-label">13</div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="13A" data-price="599">
+                                    A
+                                    <div class="seat-info-tooltip">13A - Window • $599</div>
+                                </div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="13B" data-price="599">
+                                    B
+                                    <div class="seat-info-tooltip">13B - Middle • $599</div>
+                                </div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="13C" data-price="599">
+                                    C
+                                    <div class="seat-info-tooltip">13C - Aisle • $599</div>
+                                </div>
+                                <div class="seat aisle"></div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="13D" data-price="599">
+                                    D
+                                    <div class="seat-info-tooltip">13D - Aisle • $599</div>
+                                </div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="13E" data-price="599">
+                                    E
+                                    <div class="seat-info-tooltip">13E - Middle • $599</div>
+                                </div>
+                                <div class="seat available" onclick="selectSeat(this)" data-seat="13F" data-price="599">
+                                    F
+                                    <div class="seat-info-tooltip">13F - Window • $599</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Premium Economy Class -->
+                    <div class="cabin-section">
+                        <div class="cabin-title">
+                            <i class="fas fa-crown"></i>
+                            <span>Premium Economy</span>
+                            <small class="text-muted ms-2">($899 per seat)</small>
+                        </div>
+                        
+                        <div class="seat-map" id="premiumSeats">
+                            <!-- Row 8 -->
+                            <div class="seat-row">
+                                <div class="seat-row-label">8</div>
+                                <div class="seat premium available" onclick="selectSeat(this)" data-seat="8A" data-price="899">
+                                    A
+                                    <div class="seat-info-tooltip">8A - Window • Premium • $899</div>
+                                </div>
+                                <div class="seat premium occupied">B</div>
+                                <div class="seat premium available" onclick="selectSeat(this)" data-seat="8C" data-price="899">
+                                    C
+                                    <div class="seat-info-tooltip">8C - Aisle • Premium • $899</div>
+                                </div>
+                                <div class="seat aisle"></div>
+                                <div class="seat premium available" onclick="selectSeat(this)" data-seat="8D" data-price="899">
+                                    D
+                                    <div class="seat-info-tooltip">8D - Aisle • Premium • $899</div>
+                                </div>
+                                <div class="seat premium available" onclick="selectSeat(this)" data-seat="8E" data-price="899">
+                                    E
+                                    <div class="seat-info-tooltip">8E - Middle • Premium • $899</div>
+                                </div>
+                                <div class="seat premium occupied">F</div>
+                            </div>
+                            
+                            <!-- Row 9 -->
+                            <div class="seat-row">
+                                <div class="seat-row-label">9</div>
+                                <div class="seat premium available" onclick="selectSeat(this)" data-seat="9A" data-price="899">
+                                    A
+                                    <div class="seat-info-tooltip">9A - Window • Premium • $899</div>
+                                </div>
+                                <div class="seat premium available" onclick="selectSeat(this)" data-seat="9B" data-price="899">
+                                    B
+                                    <div class="seat-info-tooltip">9B - Middle • Premium • $899</div>
+                                </div>
+                                <div class="seat premium occupied">C</div>
+                                <div class="seat aisle"></div>
+                                <div class="seat premium available" onclick="selectSeat(this)" data-seat="9D" data-price="899">
+                                    D
+                                    <div class="seat-info-tooltip">9D - Aisle • Premium • $899</div>
+                                </div>
+                                <div class="seat premium available" onclick="selectSeat(this)" data-seat="9E" data-price="899">
+                                    E
+                                    <div class="seat-info-tooltip">9E - Middle • Premium • $899</div>
+                                </div>
+                                <div class="seat premium available" onclick="selectSeat(this)" data-seat="9F" data-price="899">
+                                    F
+                                    <div class="seat-info-tooltip">9F - Window • Premium • $899</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="airplane-tail">
+                        <i class="fas fa-plane fa-rotate-180"></i>
+                    </div>
+                </div>
+                
+                <!-- Emergency Exit Info -->
+                <div class="alert alert-warning small mt-3">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Note:</strong> Rows 12 are emergency exit rows with extra legroom. 
+                    Passengers must be able to assist in an emergency.
+                </div>
+            </div>
+            
+            <!-- Selected Seats Panel -->
+            <div class="selected-seats-panel" id="selectedSeatsPanel" style="display: none;">
+                <h5 class="fw-bold mb-3">
+                    <i class="fas fa-check-circle me-2 text-success"></i>
+                    Selected Seats
+                </h5>
+                <div id="selectedSeatsList" class="mb-3"></div>
+                
+                <!-- Price Breakdown -->
+                <div class="seat-price-breakdown">
+                    <h6 class="fw-bold mb-3">Price Breakdown</h6>
+                    <div id="priceBreakdown">
+                        <!-- Dynamic content will be added here -->
+                    </div>
+                </div>
+                
+                <!-- Continue Button -->
+                <button class="btn btn-primary w-100 py-3 fw-bold" onclick="proceedToBooking()" id="continueBtn" disabled>
+                    <i class="fas fa-lock me-2"></i>Continue to Payment
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../javascript/script.js"></script>
+    <script>
+        let selectedSeats = [];
+        const passengerCount = 2; // From previous page
+        let totalPrice = 0;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize seat selection
+            updateSelectedSeatsPanel();
+        });
+        
+        function selectSeat(element) {
+            if (element.classList.contains('occupied')) {
+                showToast('This seat is already occupied', 'error');
+                return;
+            }
+            
+            const seatNumber = element.getAttribute('data-seat');
+            const seatPrice = parseInt(element.getAttribute('data-price'));
+            
+            // Check if seat is already selected
+            const seatIndex = selectedSeats.findIndex(seat => seat.number === seatNumber);
+            
+            if (seatIndex === -1) {
+                // Check if we can select more seats
+                if (selectedSeats.length >= passengerCount) {
+                    showToast(`You can only select ${passengerCount} seats`, 'error');
+                    return;
+                }
+                
+                // Add seat to selection
+                selectedSeats.push({
+                    number: seatNumber,
+                    price: seatPrice,
+                    element: element
+                });
+                
+                element.classList.remove('available', 'premium', 'legroom');
+                element.classList.add('selected');
+                
+                showToast(`Selected seat ${seatNumber}`, 'success');
+            } else {
+                // Remove seat from selection
+                selectedSeats.splice(seatIndex, 1);
+                
+                // Restore original class
+                if (element.classList.contains('premium')) {
+                    element.classList.add('premium');
+                } else if (element.classList.contains('legroom')) {
+                    element.classList.add('legroom');
+                    element.classList.add('available');
+                } else {
+                    element.classList.add('available');
+                }
+                
+                element.classList.remove('selected');
+                showToast(`Removed seat ${seatNumber}`, 'info');
+            }
+            
+            updateSelectedSeatsPanel();
+        }
+        
+        function updateSelectedSeatsPanel() {
+            const panel = document.getElementById('selectedSeatsPanel');
+            const seatsList = document.getElementById('selectedSeatsList');
+            const priceBreakdown = document.getElementById('priceBreakdown');
+            const continueBtn = document.getElementById('continueBtn');
+            
+            if (selectedSeats.length > 0) {
+                // Show panel
+                panel.style.display = 'block';
+                
+                // Update selected seats list
+                seatsList.innerHTML = '';
+                selectedSeats.forEach(seat => {
+                    const seatElement = document.createElement('div');
+                    seatElement.className = 'd-flex justify-content-between align-items-center mb-2';
+                    seatElement.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <div class="seat selected me-3" style="width: 30px; height: 30px; font-size: 0.8rem;">
+                                ${seat.number.charAt(seat.number.length - 1)}
+                            </div>
+                            <div>
+                                <div class="fw-bold">Seat ${seat.number}</div>
+                                <small class="text-muted">
+                                    ${seat.element.classList.contains('premium') ? 'Premium Economy' : 
+                                      seat.element.classList.contains('legroom') ? 'Extra Legroom' : 'Economy'}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="fw-bold">$${seat.price}</div>
+                    `;
+                    seatsList.appendChild(seatElement);
+                });
+                
+                // Update price breakdown
+                priceBreakdown.innerHTML = '';
+                totalPrice = 0;
+                
+                selectedSeats.forEach(seat => {
+                    totalPrice += seat.price;
+                    
+                    const priceRow = document.createElement('div');
+                    priceRow.className = 'price-row';
+                    priceRow.innerHTML = `
+                        <span>Seat ${seat.number}</span>
+                        <span>$${seat.price}</span>
+                    `;
+                    priceBreakdown.appendChild(priceRow);
+                });
+                
+                // Add taxes and fees
+                const taxes = totalPrice * 0.18; // 18% tax
+                const serviceFee = 25;
+                const grandTotal = totalPrice + taxes + serviceFee;
+                
+                const taxRow = document.createElement('div');
+                taxRow.className = 'price-row';
+                taxRow.innerHTML = `<span>Taxes & Fees</span><span>$${taxes.toFixed(2)}</span>`;
+                priceBreakdown.appendChild(taxRow);
+                
+                const feeRow = document.createElement('div');
+                feeRow.className = 'price-row';
+                feeRow.innerHTML = `<span>Service Fee</span><span>$${serviceFee.toFixed(2)}</span>`;
+                priceBreakdown.appendChild(feeRow);
+                
+                const totalRow = document.createElement('div');
+                totalRow.className = 'price-row total';
+                totalRow.innerHTML = `<span>Total Amount</span><span>$${grandTotal.toFixed(2)}</span>`;
+                priceBreakdown.appendChild(totalRow);
+                
+                // Update continue button
+                continueBtn.disabled = selectedSeats.length !== passengerCount;
+                if (selectedSeats.length === passengerCount) {
+                    continueBtn.innerHTML = `<i class="fas fa-lock me-2"></i>Continue to Payment ($${grandTotal.toFixed(2)})`;
+                } else {
+                    continueBtn.innerHTML = `<i class="fas fa-lock me-2"></i>Select ${passengerCount - selectedSeats.length} More Seat(s)`;
+                }
+            } else {
+                // Hide panel
+                panel.style.display = 'none';
+            }
+        }
+        
+        function proceedToBooking() {
+            if (selectedSeats.length !== passengerCount) {
+                showToast(`Please select ${passengerCount} seats`, 'error');
+                return;
+            }
+            
+            showLoading(() => {
+                // Store seat selection
+                localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
+                localStorage.setItem('totalPrice', totalPrice);
+                
+                setTimeout(() => {
+                    window.location.href = 'booking-confirmation.html';
+                }, 1500);
+            });
+        }
+        
+        // Auto-select seats for passengers
+        function autoSelectSeats() {
+            showLoading(() => {
+                // Clear existing selections
+                selectedSeats.forEach(seat => {
+                    seat.element.classList.remove('selected');
+                    seat.element.classList.add('available');
+                    if (seat.element.classList.contains('premium')) {
+                        seat.element.classList.add('premium');
+                    }
+                });
+                selectedSeats = [];
+                
+                // Find available seats together
+                const availableSeats = [];
+                document.querySelectorAll('.seat.available').forEach(seat => {
+                    if (!seat.classList.contains('legroom')) {
+                        availableSeats.push({
+                            element: seat,
+                            number: seat.getAttribute('data-seat'),
+                            price: parseInt(seat.getAttribute('data-price'))
+                        });
+                    }
+                });
+                
+                if (availableSeats.length >= passengerCount) {
+                    // Try to find adjacent seats
+                    let adjacentSeats = findAdjacentSeats(availableSeats, passengerCount);
+                    
+                    if (adjacentSeats.length === 0) {
+                        // If no adjacent seats, take any available seats
+                        adjacentSeats = availableSeats.slice(0, passengerCount);
+                    }
+                    
+                    // Select the seats
+                    adjacentSeats.forEach(seat => {
+                        selectSeat(seat.element);
+                    });
+                    
+                    showToast(`Auto-selected ${passengerCount} seats`, 'success');
+                } else {
+                    showToast('Not enough seats available together', 'error');
+                }
+            }, 500);
+        }
+        
+        function findAdjacentSeats(seats, count) {
+            // Group seats by row
+            const seatsByRow = {};
+            seats.forEach(seat => {
+                const row = seat.number.match(/\d+/)[0];
+                if (!seatsByRow[row]) seatsByRow[row] = [];
+                seatsByRow[row].push(seat);
+            });
+            
+            // Check each row for adjacent seats
+            for (const row in seatsByRow) {
+                const rowSeats = seatsByRow[row].sort((a, b) => 
+                    a.number.charCodeAt(a.number.length - 1) - b.number.charCodeAt(b.number.length - 1)
+                );
+                
+                if (rowSeats.length >= count) {
+                    // Check for adjacent seats in this row
+                    for (let i = 0; i <= rowSeats.length - count; i++) {
+                        const seatNumbers = rowSeats.slice(i, i + count).map(s => s.number);
+                        if (areAdjacent(seatNumbers)) {
+                            return rowSeats.slice(i, i + count);
+                        }
+                    }
+                }
+            }
+            
+            return [];
+        }
+        
+        function areAdjacent(seatNumbers) {
+            const letters = seatNumbers.map(s => s.charAt(s.length - 1));
+            for (let i = 1; i < letters.length; i++) {
+                if (letters[i].charCodeAt(0) - letters[i-1].charCodeAt(0) !== 1) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        // Add auto-select button
+        function addAutoSelectButton() {
+            const autoSelectBtn = document.createElement('button');
+            autoSelectBtn.className = 'btn btn-outline-primary w-100 mb-3';
+            autoSelectBtn.innerHTML = '<i class="fas fa-magic me-2"></i>Auto-Select Seats';
+            autoSelectBtn.onclick = autoSelectSeats;
+            
+            const seatContainer = document.querySelector('.seat-selection-container');
+            seatContainer.insertBefore(autoSelectBtn, seatContainer.firstChild.nextSibling);
+        }
+        
+        // Initialize auto-select button
+        addAutoSelectButton();
+    </script>
+</body>
+</html>

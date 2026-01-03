@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen d-flex flex-column">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time fw-bold">9:41</div>
+                <div class="d-flex gap-2">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- App Header -->
+            <div class="app-header mb-4">
+                <a href="#" class="logo text-decoration-none">Travel<span>Ease</span></a>
+                <div class="avatar" onclick="showProfileMenu()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            
+            <!-- Welcome Section -->
+            <div class="mb-4">
+                <h2 class="screen-title mb-2">Hi, Alex! 👋</h2>
+                <p class="text-muted">Where do you want to go today?</p>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="card p-3 mb-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-0">
+                        <i class="fas fa-search text-danger"></i>
+                    </span>
+                    <input type="text" class="form-control border-0" placeholder="Search destinations, flights, hotels...">
+                    <button class="btn btn-danger rounded-circle">
+                        <i class="fas fa-sliders-h"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Special Offer -->
+            <div class="special-offer-card card mb-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h3 class="h4 fw-bold mb-2">Special Offer!</h3>
+                        <p class="mb-3 opacity-90">
+                            Get 30% off on all flights to Europe. Limited time offer.
+                        </p>
+                    </div>
+                    <span class="badge bg-white text-danger py-2 px-3">
+                        <i class="fas fa-clock me-1"></i> 2 days
+                    </span>
+                </div>
+                <a href="../html/flight-booking.html" class="btn btn-light text-danger w-100 fw-bold">
+                    <i class="fas fa-plane me-2"></i>Book Now
+                </a>
+            </div>
+            
+            <!-- Services Grid -->
+            <h3 class="h5 fw-bold mb-3">Travel Services</h3>
+            <div class="row g-3 mb-4">
+                <div class="col-4">
+                    <a href="../html/flight-booking.html" class="service-item">
+                        <div class="service-icon mb-2">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="fw-bold">Flights</div>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="../html/hotels.html" class="service-item">
+                        <div class="service-icon mb-2">
+                            <i class="fas fa-hotel"></i>
+                        </div>
+                        <div class="fw-bold">Hotels</div>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="../html/car-rental.html" class="service-item">
+                        <div class="service-icon mb-2">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="fw-bold">Car Rent</div>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="#" class="service-item">
+                        <div class="service-icon mb-2">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <div class="fw-bold">Holidays</div>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="#" class="service-item">
+                        <div class="service-icon mb-2">
+                            <i class="fas fa-train"></i>
+                        </div>
+                        <div class="fw-bold">Trains</div>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="#" class="service-item">
+                        <div class="service-icon mb-2">
+                            <i class="fas fa-ship"></i>
+                        </div>
+                        <div class="fw-bold">Cruises</div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Popular Destinations -->
+            <h3 class="h5 fw-bold mb-3">Popular Destinations</h3>
+            <div class="card mb-4">
+                <div class="destination-item" onclick="showDestinationDetails('bali')">
+                    <div class="destination-info">
+                        <h4 class="h6 fw-bold mb-1">Bali, Indonesia</h4>
+                        <p class="text-muted small mb-0">
+                            <i class="far fa-calendar me-1"></i>7 days • 6 nights
+                        </p>
+                    </div>
+                    <div class="destination-price">$1,249</div>
+                </div>
+                <div class="destination-item" onclick="showDestinationDetails('paris')">
+                    <div class="destination-info">
+                        <h4 class="h6 fw-bold mb-1">Paris, France</h4>
+                        <p class="text-muted small mb-0">
+                            <i class="far fa-calendar me-1"></i>5 days • 4 nights
+                        </p>
+                    </div>
+                    <div class="destination-price">$899</div>
+                </div>
+                <div class="destination-item" onclick="showDestinationDetails('tokyo')">
+                    <div class="destination-info">
+                        <h4 class="h6 fw-bold mb-1">Tokyo, Japan</h4>
+                        <p class="text-muted small mb-0">
+                            <i class="far fa-calendar me-1"></i>6 days • 5 nights
+                        </p>
+                    </div>
+                    <div class="destination-price">$1,549</div>
+                </div>
+            </div>
+            
+            <!-- Upcoming Trips -->
+            <h3 class="h5 fw-bold mb-3">Upcoming Trips</h3>
+            <div class="card">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-danger text-white rounded-circle p-3 me-3">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <div>
+                        <div class="fw-bold">London Trip</div>
+                        <div class="text-muted small">May 15-22, 2023</div>
+                    </div>
+                </div>
+                <div class="progress mb-2" style="height: 6px;">
+                    <div class="progress-bar bg-danger" style="width: 75%"></div>
+                </div>
+                <div class="text-center text-danger small fw-bold">75% completed</div>
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav d-flex justify-content-around">
+            <a href="../html/dashboard.html" class="nav-item active">
+                <div class="nav-icon"><i class="fas fa-home"></i></div>
+                <div class="nav-label">Home</div>
+            </a>
+            <a href="../html/flight-booking.html" class="nav-item">
+                <div class="nav-icon"><i class="fas fa-plane"></i></div>
+                <div class="nav-label">Flights</div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"><i class="fas fa-suitcase"></i></div>
+                <div class="nav-label">Trips</div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"><i class="fas fa-user"></i></div>
+                <div class="nav-label">Profile</div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../javascript/script.js"></script>
+    <script>
+        function showProfileMenu() {
+            showToast('Profile menu would open here', 'info');
+        }
+        
+        function showDestinationDetails(destination) {
+            const destinations = {
+                bali: { name: 'Bali, Indonesia', price: '$1,249', duration: '7 days' },
+                paris: { name: 'Paris, France', price: '$899', duration: '5 days' },
+                tokyo: { name: 'Tokyo, Japan', price: '$1,549', duration: '6 days' }
+            };
+            
+            const dest = destinations[destination];
+            if (dest) {
+                const message = `${dest.name}\nDuration: ${dest.duration}\nPrice: ${dest.price}`;
+                if (confirm(`${message}\n\nWould you like to book this trip?`)) {
+                    window.location.href = 'flight-booking.html';
+                }
+            }
+        }
+        
+        // Search functionality
+        document.querySelector('input[type="text"]').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim();
+                if (query) {
+                    showToast(`Searching for: ${query}`, 'info');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

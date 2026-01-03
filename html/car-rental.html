@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase - Car Rental</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Car Rental Specific Styles */
+        :root {
+            --primary-color: #e53935;
+            --primary-dark: #d32f2f;
+            --primary-light: #ffcdd2;
+            --secondary-color: #2196F3;
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --luxury-color: #FFD700;
+            --suv-color: #2196F3;
+            --economy-color: #4CAF50;
+        }
+        
+        .car-rental-container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Car Card Styles */
+        .car-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .car-card.selected {
+            border: 3px solid var(--primary-color);
+            background: #ffebee;
+        }
+        
+        .car-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .car-badge.luxury {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+        
+        .car-badge.suv {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+        }
+        
+        .car-badge.economy {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        }
+        
+        .car-badge.premium {
+            background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+        }
+        
+        .car-image {
+            height: 150px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f8f9fa;
+            position: relative;
+        }
+        
+        .car-rating {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .car-rating i {
+            color: #FFD700;
+        }
+        
+        .car-info {
+            padding: 15px;
+        }
+        
+        .car-specs {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .car-spec-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .car-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .filter-btn {
+            white-space: nowrap;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .filter-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Booking Summary */
+        .booking-summary {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 4px solid var(--primary-color);
+            margin-top: 20px;
+        }
+        
+        .price-breakdown {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .price-row:last-child {
+            border-bottom: none;
+        }
+        
+        .price-row.total {
+            border-top: 2px solid var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            padding-top: 12px;
+            color: var(--primary-color);
+        }
+        
+        /* Insurance Options */
+        .insurance-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .insurance-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .insurance-option:hover {
+            background: #e9ecef;
+        }
+        
+        .insurance-option.selected {
+            background: #e8f5e9;
+            border-color: var(--success-color);
+        }
+        
+        .insurance-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        
+        .insurance-option.selected .insurance-checkbox {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+        
+        .insurance-option.selected .insurance-checkbox::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        /* Pickup/Dropoff */
+        .location-section {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .location-card {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .location-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        /* Date/Time Selector */
+        .datetime-selector {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .datetime-input {
+            flex: 1;
+        }
+        
+        .datetime-input label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .feature-item i {
+            color: var(--primary-color);
+        }
+        
+        /* Driver Options */
+        .driver-options {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .driver-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .driver-option:hover {
+            border-color: var(--primary-color);
+            background: #ffebee;
+        }
+        
+        .driver-option.selected {
+            border-color: var(--primary-color);
+            background: #ffebee;
+        }
+        
+        .driver-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .payment-method {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background: #ffebee;
+        }
+        
+        .payment-icon {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .location-section {
+                flex-direction: column;
+            }
+            
+            .datetime-selector {
+                flex-direction: column;
+            }
+            
+            .driver-options {
+                flex-direction: column;
+            }
+            
+            .payment-methods {
+                flex-wrap: wrap;
+            }
+            
+            .payment-method {
+                min-width: calc(50% - 5px);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .car-image {
+                height: 120px;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen d-flex flex-column">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time fw-bold">9:41</div>
+                <div class="d-flex gap-2">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- Back Button -->
+            <a href="../html/dashboard.html" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            
+            <!-- App Header -->
+            <div class="app-header mb-4">
+                <a href="#" class="logo text-decoration-none">Travel<span>Ease</span></a>
+                <div class="avatar" onclick="showProfile()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            
+            <!-- Main Title -->
+            <h2 class="screen-title mb-3">Rent a Car 🚗</h2>
+            <p class="text-muted mb-4">Find the perfect car for your journey</p>
+            
+            <!-- Search Section -->
+            <div class="car-rental-container fade-in-up">
+                <form id="carSearchForm">
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-map-marker-alt me-1"></i>Pick-up Location
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-end-0">
+                                    <i class="fas fa-car text-muted"></i>
+                                </span>
+                                <input type="text" class="form-control" id="pickupLocation" placeholder="City, Airport or Address" value="Bali International Airport">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-map-marker-alt me-1"></i>Drop-off Location
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-end-0">
+                                    <i class="fas fa-flag-checkered text-muted"></i>
+                                </span>
+                                <input type="text" class="form-control" id="dropoffLocation" placeholder="Same as pick-up" value="Same as pick-up">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-calendar-alt me-1"></i>Pick-up Date
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="May 15, 2023" readonly onclick="showDatePicker('pickupDate')">
+                                <span class="input-group-text bg-transparent">
+                                    <i class="fas fa-calendar text-muted"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-clock me-1"></i>Time
+                            </label>
+                            <select class="form-select" id="pickupTime">
+                                <option>08:00 AM</option>
+                                <option>09:00 AM</option>
+                                <option selected>10:00 AM</option>
+                                <option>11:00 AM</option>
+                                <option>12:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-calendar-alt me-1"></i>Return Date
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="May 20, 2023" readonly onclick="showDatePicker('returnDate')">
+                                <span class="input-group-text bg-transparent">
+                                    <i class="fas fa-calendar text-muted"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label small fw-bold">
+                                <i class="fas fa-clock me-1"></i>Time
+                            </label>
+                            <select class="form-select" id="returnTime">
+                                <option>08:00 AM</option>
+                                <option>09:00 AM</option>
+                                <option>10:00 AM</option>
+                                <option selected>11:00 AM</option>
+                                <option>12:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold">
+                        <i class="fas fa-search me-2"></i>Search Available Cars
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Car Categories Filter -->
+            <div class="filter-section fade-in-up">
+                <h5 class="fw-bold mb-3">Car Categories</h5>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterCars('all')">All Cars</button>
+                    <button class="filter-btn" onclick="filterCars('economy')">Economy</button>
+                    <button class="filter-btn" onclick="filterCars('suv')">SUV</button>
+                    <button class="filter-btn" onclick="filterCars('luxury')">Luxury</button>
+                    <button class="filter-btn" onclick="filterCars('premium')">Premium</button>
+                    <button class="filter-btn" onclick="filterCars('convertible')">Convertible</button>
+                    <button class="filter-btn" onclick="filterCars('electric')">Electric</button>
+                </div>
+            </div>
+            
+            <!-- Available Cars -->
+            <div id="availableCars">
+                <!-- Luxury Car 1 -->
+                <div class="car-card fade-in-up" data-category="luxury premium" onclick="selectCar(1)">
+                    <div class="car-badge luxury">LUXURY</div>
+                    <div class="car-image" style="background-image: url('https://cdn-icons-png.flaticon.com/512/744/744465.png')">
+                        <div class="car-rating">
+                            <i class="fas fa-star"></i> 4.9
+                        </div>
+                    </div>
+                    <div class="car-info">
+                        <h6 class="fw-bold mb-1">Mercedes-Benz S-Class</h6>
+                        <p class="text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Bali Airport • Automatic
+                        </p>
+                        
+                        <div class="car-specs">
+                            <div class="car-spec-item">
+                                <i class="fas fa-user-friends"></i>
+                                <span>5 Seats</span>
+                            </div>
+                            <div class="car-spec-item">
+                                <i class="fas fa-suitcase"></i>
+                                <span>3 Bags</span>
+                            </div>
+                            <div class="car-spec-item">
+                                <i class="fas fa-snowflake"></i>
+                                <span>AC</span>
+                            </div>
+                        </div>
+                        
+                        <div class="car-price">
+                            <div>
+                                <div class="fw-bold text-danger fs-5">$149</div>
+                                <small class="text-muted">per day</small>
+                            </div>
+                            <button class="btn btn-danger btn-sm">
+                                Select Car
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SUV Car 1 -->
+                <div class="car-card fade-in-up" data-category="suv premium" onclick="selectCar(2)">
+                    <div class="car-badge suv">SUV</div>
+                    <div class="car-image" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3079/3079035.png')">
+                        <div class="car-rating">
+                            <i class="fas fa-star"></i> 4.8
+                        </div>
+                    </div>
+                    <div class="car-info">
+                        <h6 class="fw-bold mb-1">Toyota Fortuner</h6>
+                        <p class="text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Bali Airport • Automatic
+                        </p>
+                        
+                        <div class="car-specs">
+                            <div class="car-spec-item">
+                                <i class="fas fa-user-friends"></i>
+                                <span>7 Seats</span>
+                            </div>
+                            <div class="car-spec-item">
+                                <i class="fas fa-suitcase"></i>
+                                <span>5 Bags</span>
+                            </div>
+                            <div class="car-spec-item">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>Diesel</span>
+                            </div>
+                        </div>
+                        
+                        <div class="car-price">
+                            <div>
+                                <div class="fw-bold text-danger fs-5">$89</div>
+                                <small class="text-muted">per day</small>
+                            </div>
+                            <button class="btn btn-danger btn-sm">
+                                Select Car
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Economy Car 1 -->
+                <div class="car-card fade-in-up" data-category="economy" onclick="selectCar(3)">
+                    <div class="car-badge economy">ECONOMY</div>
+                    <div class="car-image" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3079/3079011.png')">
+                        <div class="car-rating">
+                            <i class="fas fa-star"></i> 4.7
+                        </div>
+                    </div>
+                    <div class="car-info">
+                        <h6 class="fw-bold mb-1">Toyota Yaris</h6>
+                        <p class="text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Bali Downtown • Manual
+                        </p>
+                        
+                        <div class="car-specs">
+                            <div class="car-spec-item">
+                                <i class="fas fa-user-friends"></i>
+                                <span>5 Seats</span>
+                            </div>
+                            <div class="car-spec-item">
+                                <i class="fas fa-suitcase"></i>
+                                <span>2 Bags</span>
+                            </div>
+                            <div class="car-spec-item">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>Petrol</span>
+                            </div>
+                        </div>
+                        
+                        <div class="car-price">
+                            <div>
+                                <div class="fw-bold text-danger fs-5">$39</div>
+                                <small class="text-muted">per day</small>
+                            </div>
+                            <button class="btn btn-danger btn-sm">
+                                Select Car
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Premium Car 1 -->
+                <div class="car-card fade-in-up" data-category="premium luxury" onclick="selectCar(4)">
+                    <div class="car-badge premium">PREMIUM</div>
+                    <div class="car-image" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3079/3079082.png')">
+                        <div class="car-rating">
+                            <i class="fas fa-star"></i> 4.9
+                        </div>
+                    </div>
+                    <div class="car-info">
+                        <h6 class="fw-bold mb-1">BMW 5 Series</h6>
+                        <p class="text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Bali Airport • Automatic
+                        </p>
+                        
+                        <div class="car-specs">
+                            <div class="car-spec-item">
+                                <i class="fas fa-user-friends"></i>
+                                <span>5 Seats</span>
+                            </div>
+                            <div class="car-spec-item">
+                                <i class="fas fa-suitcase"></i>
+                                <span>3 Bags</span>
+                            </div>
+                            <div class="car-spec-item">
+                                <i class="fas fa-bolt"></i>
+                                <span>Hybrid</span>
+                            </div>
+                        </div>
+                        
+                        <div class="car-price">
+                            <div>
+                                <div class="fw-bold text-danger fs-5">$119</div>
+                                <small class="text-muted">per day</small>
+                            </div>
+                            <button class="btn btn-danger btn-sm">
+                                Select Car
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Booking Summary (Initially Hidden) -->
+            <div class="booking-summary fade-in-up" id="bookingSummary" style="display: none;">
+                <h5 class="fw-bold mb-3">
+                    <i class="fas fa-check-circle me-2 text-success"></i>
+                    Selected Car
+                </h5>
+                <div id="selectedCarInfo" class="mb-3"></div>
+                
+                <!-- Rental Details -->
+                <div class="location-section">
+                    <div class="location-card">
+                        <div class="location-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h6 class="fw-bold mb-2">Pick-up</h6>
+                        <p class="small mb-1">Bali International Airport</p>
+                        <p class="small text-muted mb-0">May 15, 2023 • 10:00 AM</p>
+                    </div>
+                    <div class="location-card">
+                        <div class="location-icon">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                        <h6 class="fw-bold mb-2">Drop-off</h6>
+                        <p class="small mb-1">Bali International Airport</p>
+                        <p class="small text-muted mb-0">May 20, 2023 • 11:00 AM</p>
+                    </div>
+                </div>
+                
+                <!-- Insurance Options -->
+                <div class="mb-3">
+                    <h6 class="fw-bold mb-3">Insurance Options</h6>
+                    <div class="insurance-options">
+                        <div class="insurance-option" onclick="selectInsurance('basic')">
+                            <div style="display: flex; align-items: center;">
+                                <div class="insurance-checkbox"></div>
+                                <div>
+                                    <div class="fw-bold">Basic Insurance</div>
+                                    <div class="text-muted small">Third party liability</div>
+                                </div>
+                            </div>
+                            <div class="fw-bold">Included</div>
+                        </div>
+                        
+                        <div class="insurance-option selected" onclick="selectInsurance('full')">
+                            <div style="display: flex; align-items: center;">
+                                <div class="insurance-checkbox"></div>
+                                <div>
+                                    <div class="fw-bold">Full Coverage</div>
+                                    <div class="text-muted small">Zero excess, theft protection</div>
+                                </div>
+                            </div>
+                            <div class="fw-bold">$15/day</div>
+                        </div>
+                        
+                        <div class="insurance-option" onclick="selectInsurance('premium')">
+                            <div style="display: flex; align-items: center;">
+                                <div class="insurance-checkbox"></div>
+                                <div>
+                                    <div class="fw-bold">Premium Protection</div>
+                                    <div class="text-muted small">Includes personal accident</div>
+                                </div>
+                            </div>
+                            <div class="fw-bold">$25/day</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Features -->
+                <div class="mb-3">
+                    <h6 class="fw-bold mb-3">Additional Features</h6>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-baby-carriage"></i>
+                            <span>Child Seat (+$5/day)</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-snowflake"></i>
+                            <span>GPS Navigation (+$8/day)</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-wifi"></i>
+                            <span>WiFi Hotspot (+$10/day)</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-gas-pump"></i>
+                            <span>Full Fuel Tank</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Driver Options -->
+                <div class="mb-3">
+                    <h6 class="fw-bold mb-3">Driver Options</h6>
+                    <div class="driver-options">
+                        <div class="driver-option selected" onclick="selectDriver('self')">
+                            <div class="driver-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="fw-bold">Self Drive</div>
+                            <div class="text-muted small">You drive</div>
+                        </div>
+                        <div class="driver-option" onclick="selectDriver('chauffeur')">
+                            <div class="driver-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="fw-bold">With Chauffeur</div>
+                            <div class="text-muted small">+$50/day</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Price Breakdown -->
+                <div class="price-breakdown">
+                    <h6 class="fw-bold mb-3">Price Breakdown</h6>
+                    <div id="priceDetails">
+                        <!-- Price rows will be dynamically added here -->
+                    </div>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-3">Payment Method</h6>
+                    <div class="payment-methods">
+                        <div class="payment-method selected" onclick="selectPayment('card')">
+                            <div class="payment-icon">
+                                <i class="far fa-credit-card"></i>
+                            </div>
+                            <div class="small">Credit Card</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment('paypal')">
+                            <div class="payment-icon">
+                                <i class="fab fa-paypal"></i>
+                            </div>
+                            <div class="small">PayPal</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment('googlepay')">
+                            <div class="payment-icon">
+                                <i class="fab fa-google-pay"></i>
+                            </div>
+                            <div class="small">Google Pay</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment('cash')">
+                            <div class="payment-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="small">Pay at Counter</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Terms & Conditions -->
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="carTerms">
+                    <label class="form-check-label small" for="carTerms">
+                        I agree to the <a href="#" onclick="showTerms()">Rental Terms & Conditions</a> 
+                        and confirm I have a valid driver's license
+                    </label>
+                </div>
+                
+                <!-- Book Now Button -->
+                <button class="btn btn-primary w-100 py-3 fw-bold" onclick="bookCar()" id="bookCarBtn">
+                    <i class="fas fa-lock me-2"></i>Book Now - $0
+                </button>
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav d-flex justify-content-around">
+            <a href="../html/dashboard.html" class="nav-item">
+                <div class="nav-icon"><i class="fas fa-home"></i></div>
+                <div class="nav-label">Home</div>
+            </a>
+            <a href="../html/flight-booking.html" class="nav-item">
+                <div class="nav-icon"><i class="fas fa-plane"></i></div>
+                <div class="nav-label">Flights</div>
+            </a>
+            <a href="../html/hotels.html" class="nav-item">
+                <div class="nav-icon"><i class="fas fa-hotel"></i></div>
+                <div class="nav-label">Hotels</div>
+            </a>
+            <a href="../html/car-rental.html" class="nav-item active">
+                <div class="nav-icon"><i class="fas fa-car"></i></div>
+                <div class="nav-label">Car Rent</div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../javascript/script.js"></script>
+    <script>
+        let selectedCar = null;
+        let rentalDays = 5;
+        let selectedInsurance = 'full';
+        let selectedDriver = 'self';
+        let selectedPayment = 'card';
+        let additionalFeatures = [];
+        let carPrices = {
+            1: { daily: 149, name: "Mercedes-Benz S-Class", type: "Luxury" },
+            2: { daily: 89, name: "Toyota Fortuner", type: "SUV" },
+            3: { daily: 39, name: "Toyota Yaris", type: "Economy" },
+            4: { daily: 119, name: "BMW 5 Series", type: "Premium" }
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Car search form
+            document.getElementById('carSearchForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const pickupLocation = document.getElementById('pickupLocation').value;
+                const pickupDate = document.querySelector('[onclick="showDatePicker(\'pickupDate\')"]').value;
+                const returnDate = document.querySelector('[onclick="showDatePicker(\'returnDate\')"]').value;
+                
+                if (!pickupLocation || !pickupDate || !returnDate) {
+                    showToast('Please fill in all required fields', 'error');
+                    return;
+                }
+                
+                showLoading(() => {
+                    setTimeout(() => {
+                        showToast(`Searching cars at ${pickupLocation}`, 'info');
+                        // Simulate search
+                        filterCars('all');
+                    }, 1500);
+                });
+            });
+            
+            // Calculate rental days
+            calculateRentalDays();
+        });
+        
+        function selectCar(carId) {
+            const carCards = document.querySelectorAll('.car-card');
+            carCards.forEach(card => card.classList.remove('selected'));
+            
+            // Select the clicked card
+            event.currentTarget.classList.add('selected');
+            selectedCar = carId;
+            
+            // Show booking summary
+            const bookingSummary = document.getElementById('bookingSummary');
+            bookingSummary.style.display = 'block';
+            
+            // Scroll to booking summary
+            bookingSummary.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update selected car info
+            updateSelectedCarInfo();
+            
+            showToast(`Selected ${carPrices[carId].name}`, 'success');
+        }
+        
+        function updateSelectedCarInfo() {
+            const carInfo = carPrices[selectedCar];
+            const selectedCarInfo = document.getElementById('selectedCarInfo');
+            
+            selectedCarInfo.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <div class="car-image me-3" style="width: 80px; height: 80px; background-image: url('https://cdn-icons-png.flaticon.com/512/3079/3079011.png')"></div>
+                    <div>
+                        <div class="fw-bold">${carInfo.name}</div>
+                        <div class="text-muted small">${carInfo.type} • 5 Seats • Automatic</div>
+                        <div class="fw-bold text-danger">$${carInfo.daily} per day</div>
+                    </div>
+                </div>
+            `;
+            
+            // Update price breakdown
+            updatePriceBreakdown();
+        }
+        
+        function calculateRentalDays() {
+            // Simple calculation - in real app, calculate from dates
+            rentalDays = 5;
+            return rentalDays;
+        }
+        
+        function updatePriceBreakdown() {
+            if (!selectedCar) return;
+            
+            const carPrice = carPrices[selectedCar];
+            const basePrice = carPrice.daily * rentalDays;
+            const insurancePrices = {
+                'basic': 0,
+                'full': 15 * rentalDays,
+                'premium': 25 * rentalDays
+            };
+            const chauffeurPrice = selectedDriver === 'chauffeur' ? 50 * rentalDays : 0;
+            
+            const priceDetails = document.getElementById('priceDetails');
+            priceDetails.innerHTML = '';
+            
+            // Base price
+            addPriceRow('Car Rental', `$${carPrice.daily} × ${rentalDays} days`, basePrice);
+            
+            // Insurance
+            const insurancePrice = insurancePrices[selectedInsurance];
+            if (insurancePrice > 0) {
+                addPriceRow('Full Coverage Insurance', `$${insurancePrice/rentalDays} × ${rentalDays} days`, insurancePrice);
+            }
+            
+            // Chauffeur
+            if (chauffeurPrice > 0) {
+                addPriceRow('Chauffeur Service', `$${50} × ${rentalDays} days`, chauffeurPrice);
+            }
+            
+            // Additional features
+            additionalFeatures.forEach(feature => {
+                addPriceRow(feature.name, `$${feature.price} × ${rentalDays} days`, feature.price * rentalDays);
+            });
+            
+            // Taxes (18%)
+            const subtotal = basePrice + insurancePrice + chauffeurPrice + 
+                           additionalFeatures.reduce((sum, f) => sum + (f.price * rentalDays), 0);
+            const taxes = subtotal * 0.18;
+            addPriceRow('Taxes & Fees', '18%', taxes);
+            
+            // Service fee
+            const serviceFee = 25;
+            addPriceRow('Service Fee', 'Fixed', serviceFee);
+            
+            // Total
+            const total = subtotal + taxes + serviceFee;
+            addPriceRow('Total Amount', '', total, true);
+            
+            // Update book button
+            document.getElementById('bookCarBtn').innerHTML = `<i class="fas fa-lock me-2"></i>Book Now - $${total}`;
+        }
+        
+        function addPriceRow(label, description, amount, isTotal = false) {
+            const priceDetails = document.getElementById('priceDetails');
+            const row = document.createElement('div');
+            row.className = `price-row ${isTotal ? 'total' : ''}`;
+            row.innerHTML = `
+                <div>
+                    <div>${label}</div>
+                    <div class="text-muted small">${description}</div>
+                </div>
+                <div class="fw-bold">$${amount.toFixed(2)}</div>
+            `;
+            priceDetails.appendChild(row);
+        }
+        
+        function selectInsurance(type) {
+            selectedInsurance = type;
+            
+            // Update UI
+            document.querySelectorAll('.insurance-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            updatePriceBreakdown();
+            showToast(`${type.charAt(0).toUpperCase() + type.slice(1)} insurance selected`, 'info');
+        }
+        
+        function selectDriver(type) {
+            selectedDriver = type;
+            
+            // Update UI
+            document.querySelectorAll('.driver-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            updatePriceBreakdown();
+            showToast(`${type === 'self' ? 'Self drive' : 'With chauffeur'} selected`, 'info');
+        }
+        
+        function selectPayment(type) {
+            selectedPayment = type;
+            
+            // Update UI
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            showToast(`${type.charAt(0).toUpperCase() + type.slice(1)} payment selected`, 'info');
+        }
+        
+        function filterCars(category) {
+            const carCards = document.querySelectorAll('.car-card');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            filterButtons.forEach(btn => {
+                if (btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.textContent.includes('All'))) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Filter cars
+            carCards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category').includes(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            showToast(`Showing ${category} cars`, 'info');
+        }
+        
+        function bookCar() {
+            if (!selectedCar) {
+                showToast('Please select a car first', 'error');
+                return;
+            }
+            
+            const termsChecked = document.getElementById('carTerms').checked;
+            if (!termsChecked) {
+                showToast('Please accept the terms and conditions', 'error');
+                return;
+            }
+            
+            showLoading(() => {
+                // Store booking details
+                const carInfo = carPrices[selectedCar];
+                const bookingData = {
+                    car: carInfo.name,
+                    type: carInfo.type,
+                    pickupLocation: document.getElementById('pickupLocation').value,
+                    pickupDate: document.querySelector('[onclick="showDatePicker(\'pickupDate\')"]').value,
+                    pickupTime: document.getElementById('pickupTime').value,
+                    returnDate: document.querySelector('[onclick="showDatePicker(\'returnDate\')"]').value,
+                    returnTime: document.getElementById('returnTime').value,
+                    insurance: selectedInsurance,
+                    driver: selectedDriver,
+                    payment: selectedPayment,
+                    price: calculateTotalPrice()
+                };
+                
+                localStorage.setItem('carBooking', JSON.stringify(bookingData));
+                
+                setTimeout(() => {
+                    showToast('Car booking confirmed!', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'car-booking-confirmation.html';
+                    }, 1500);
+                }, 2000);
+            });
+        }
+        
+        function calculateTotalPrice() {
+            if (!selectedCar) return 0;
+            
+            const carPrice = carPrices[selectedCar];
+            const basePrice = carPrice.daily * rentalDays;
+            const insurancePrices = {
+                'basic': 0,
+                'full': 15 * rentalDays,
+                'premium': 25 * rentalDays
+            };
+            const chauffeurPrice = selectedDriver === 'chauffeur' ? 50 * rentalDays : 0;
+            
+            const subtotal = basePrice + insurancePrices[selectedInsurance] + chauffeurPrice;
+            const taxes = subtotal * 0.18;
+            const serviceFee = 25;
+            
+            return subtotal + taxes + serviceFee;
+        }
+        
+        function showDatePicker(type) {
+            const date = prompt(`Enter ${type} date (MM/DD/YYYY):`, '05/15/2023');
+            if (date) {
+                const formattedDate = formatDate(date);
+                document.querySelector(`[onclick="showDatePicker('${type}')"]`).value = formattedDate;
+                
+                // Recalculate days if both dates are set
+                calculateRentalDays();
+                if (selectedCar) {
+                    updatePriceBreakdown();
+                }
+            }
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+        }
+        
+        function showTerms() {
+            showToast('Terms and conditions would open here', 'info');
+        }
+        
+        function showProfile() {
+            showToast('Profile menu would open here', 'info');
+        }
+        
+        // Toggle additional features
+        document.querySelectorAll('.feature-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                const featureName = this.querySelector('span').textContent;
+                const priceMatch = featureName.match(/\(\+\$(\d+)\/day\)/);
+                
+                if (priceMatch) {
+                    const price = parseInt(priceMatch[1]);
+                    const feature = {
+                        name: featureName.replace(/ \(\+\$\d+\/day\)/, ''),
+                        price: price
+                    };
+                    
+                    if (this.classList.contains('selected')) {
+                        additionalFeatures.push(feature);
+                    } else {
+                        additionalFeatures = additionalFeatures.filter(f => f.name !== feature.name);
+                    }
+                    
+                    updatePriceBreakdown();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
